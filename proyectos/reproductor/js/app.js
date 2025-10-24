@@ -21,7 +21,7 @@ async function ejecutarBusqueda() {
     paginaToken = ""
     let botones = document.getElementById("paginacion");
     
-    mostrarMensaje("⏳ Buscando...",true);
+    mostrarMensaje("Buscando...",true);
     const ids = await Buscar(musica);
     const seve = await sePuedeVer(ids);
     mostrar(seve);
@@ -46,7 +46,7 @@ btnBuscar.addEventListener("click", (e) => {
 document.getElementById("siguiente").addEventListener("click", async () => {
   
   if (!ultimaBusqueda || !paginaToken) return;
-    mostrarMensaje("⏳ Cargando siguiente página...",true);
+    mostrarMensaje("Cargando siguiente página...",true);
     window.scrollTo({
       top: 0,
       behavior: "smooth"
@@ -59,7 +59,7 @@ document.getElementById("siguiente").addEventListener("click", async () => {
 
 document.getElementById("anterior").addEventListener("click", async () => {
   if (!ultimaBusqueda || !prevToken) return;
-    mostrarMensaje("⏳ Cargando página anterior...", true);
+    mostrarMensaje("Cargando página anterior...", true);
     window.scrollTo({
       top: 0,
       behavior: "smooth"
@@ -123,7 +123,7 @@ function mostrar(video) {
   ul.innerHTML = "";
 
   if (!video.length) {
-    mostrarMensaje("⚠️ No se encontraron resultados válidos.",true);
+    mostrarMensaje(" No se encontraron resultados válidos.",true);
     return;
   }
   mostrarMensaje("",);
@@ -133,8 +133,35 @@ function mostrar(video) {
     let titulo = document.createElement("p");
 
     titulo.textContent = v.titulo;
-    li.appendChild(titulo);
+   
     if (v.embebible) {
+      if (typeof YT !== "undefined" && YT.Player) {
+        new YT.Player(frame.id, {
+          events: {
+            onError: (event) => {
+              frame.remove();
+              let msg = "";
+              switch (event.data)
+              {
+                case 2: msg = "ID del video inválido.";
+                  break;
+                case 5: msg = "Error en reproducción del video.";
+                  break;
+                case 100: msg = "Video no existe o es privado.";
+                  break;
+                case 101:
+                case 150: msg = `Este video no se puede reproducir en esta página. < a href = "https://www.youtube.com/watch?v=${v.id}" target = "_blank" > Ver en YouTube</a >`;
+                  break;
+                default: msg = "Error desconocido al reproducir el video.";
+              }
+              let aviso = document.createElement("p");
+              aviso.innerHTML = msg;
+              li.appendChild(aviso);
+            }
+          }
+        });
+      }
+      li.appendChild(titulo);
       let thumb = document.createElement("img");
       thumb.src = v.miniatura;
       thumb.width = 300;
@@ -155,38 +182,13 @@ function mostrar(video) {
         frame.allowFullscreen = true;
         li.replaceChild(frame, thumb);
       })
-    
-      if (typeof YT !== "undefined" && YT.Player) {
-        new YT.Player(frame.id, {
-          events: {
-            onError: (event) => {
-              frame.remove();
-              let msg = "";
-              switch (event.data)
-              {
-                case 2: msg = "❌ ID del video inválido.";
-                  break;
-                case 5: msg = "⚠️ Error en reproducción del video.";
-                  break;
-                case 100: msg = "🚫 Video no existe o es privado.";
-                  break;
-                case 101:
-                case 150: msg = ` 🔒 Este video no se puede reproducir en esta página. < a href = "https://www.youtube.com/watch?v=${v.id}" target = "_blank" > Ver en YouTube</a >`;
-                  break;
-                default: msg = "⚠️ Error desconocido al reproducir el video.";
-              }
-              let aviso = document.createElement("p");
-              aviso.innerHTML = msg;
-              li.appendChild(aviso);
-            }
-          }
-        });
-      }
-
+      
     } else {
+      
       let aviso = document.createElement("p");
-      aviso.innerHTML = `🚫 No se puede reproducir en esta página. <a href="https://www.youtube.com/watch?v=${v.id}" target="_blank">Ver en YouTube</a>`;
+      aviso.innerHTML = `No se puede reproducir en esta página. <a href="https://www.youtube.com/watch?v=${v.id}" target="_blank">Ver en YouTube</a>`;
       li.appendChild(aviso);
+      
     }
 
     ul.appendChild(li);
@@ -212,68 +214,3 @@ function mostrarMensaje(msg,estado) {
   }
 }
 
-
-
-
-
-/*
-
- let player;
-  let progressBar = document.getElementById('progress');
-
-  // Crear el reproductor
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-      height: '315',
-      width: '560',
-      videoId: 'VIDEO_ID', // <- reemplaza con tu video
-      playerVars: {
-        controls: 0, // Oculta controles de YouTube
-        modestbranding: 1
-      },
-      events: {
-        onReady: onPlayerReady,
-        onStateChange: onPlayerStateChange
-      }
-    });
-  }
-
-  function onPlayerReady(event) {
-    setInterval(updateProgress, 1000); // Actualizar progreso cada segundo
-  }
-
-  function onPlayerStateChange(event) {
-    // Aquí podrías cambiar iconos según estado si quieres
-  }
-
-  // Funciones de control
-  function playVideo() { player.playVideo(); }
-  function pauseVideo() { player.pauseVideo(); }
-  function stopVideo() { 
-    player.stopVideo(); 
-    progressBar.value = 0;
-  }
-
-  function setVolume(value) {
-    player.setVolume(value);
-  }
-
-  // Actualizar barra de progreso
-  function updateProgress() {
-    if(player && player.getDuration) {
-      let duration = player.getDuration();
-      let current = player.getCurrentTime();
-      let percent = (current / duration) * 100;
-      progressBar.value = percent;
-    }
-  }
-
-  // Cambiar posición del video desde la barra
-  progressBar.addEventListener('input', function() {
-    if(player && player.getDuration) {
-      let seekTo = (this.value / 100) * player.getDuration();
-      player.seekTo(seekTo, true);
-    }
-  });
-
-*/

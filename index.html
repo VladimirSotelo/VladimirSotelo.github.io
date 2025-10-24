@@ -3,39 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/styles.css">
     <title>Porfolio</title>
 </head>
 <body>
-    <div>
-        <h1>Frond-End</h1>
-        <h2>Sotelo Shannon Vladimir</h2>
-        <p>Descripcion</p>
+    <div class="container">
+        <div class="nav">
+                <a href="">Proyectos</a>
+                <a href="">Sobre mi</a>
+                <a href="">Contacto</a>
+        </div>
+        <div class="header">
+            
+            <div>
+                <h1 class="titulo">Desarrollador frond-End</h1>
+                <h2 class="nombre">Sotelo Shannon Vladimir</h2>
+                <p class="descripcion">Soy un desarrollador frontend en formación, con experiencia en HTML, CSS y JavaScript. Me apasiona crear interfaces web
+                limpias, funcionales y fáciles de usar, aplicando buenas prácticas y aprendiendo constantemente nuevas tecnologías.
+                Busco oportunidades para contribuir en proyectos desafiantes y seguir creciendo profesionalmente.</p>
+            </div>
+            
+            <img src="imgs/foto.jpeg" alt="">
+        </div>
+        <div class="main">
+            <div class="container_skills">
+                <h2>Tecnología</h2>
+                <ul>
+                    <li><img src="imgs/js.png" alt="">JavaScrips</li>
+                    <li><img src="imgs/css.png" alt="">Css</li>
+                    <li><img src="imgs/html.png" alt="">Html</li>
+                </ul>
+            </div>
+            <div class="proyectos">
+                <h2>Mis proyectos</h2>
+                <div class="proyectos-grid">
+                    <div class="card">
+                        <img src="imgs/fondo-repro.png" alt="imagen de reproductor">
+                        <h3>Reproductor de video</h3>
+                        <p>Reproducto de video que usa la api de Youtube, con funcionalidades basicas. </p>
+                        <div class="links">
+                            <a href="proyectos/reproductor/index.html" target="_blank">Ver Demo</a>
+                            <a href="" target="_blank">Ver Código</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="imgs/fondo-port.png" alt="imagen del portfolio">
+                        <h3>Reproductor de video</h3>
+                        <p>Reproducto de video que usa la api de Youtube, con funcionalidades basicas. </p>
+                        <div class="links">
+                            <a href="index.html" target="_blank">Ver Demo</a>
+                            <a href="" target="_blank">Ver Código</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="sobremi">
+                <h2>Sobre Mi</h2>
+                <p>Me apaciona crear interfaces limpias, funcionales y fáciles de usar ademas de seguir aprendiendo constantemente nuevas tecnologías. </p>
+            </div>
+            <div class="contacto">
+                <h2>Contacto</h2>
+                <form action="https://formspree.io/f/xpwygdpp" method="POST" class="contacto_container">
+                    <label for="nombre-contacto">Nombre</label>
+                    <input type="text" class="nombre-contacto" required>
+                    
+                    <label for="email">Email</label>
+                    <input type="email" name="email" class="email" required>
+                    
+                    <label for="texto">Mensaje</label>
+                    <textarea name="message" class="texto" required></textarea >
+                    
+                    <button type="submit" class="btnEnviar">Enviar</button>
+                </form>
+                <div >
+                    
+                </div>
+                
+            </div>
+        </div>
     </div>
-    <div>
-        <h2>Skills</h2>
-        <ul>
-            <li>js</li>
-            <li>css</li>
-            <li>html</li>
-        </ul>
-    </div>
-    <div>
-        <h2>Proyectos</h2>
-        <ul>
-            <li>
-                <h2>p1</h2>
-                <p>enlace</p>
-                <a href="proyectos/reproductor/index.html"></a>
-            </li>
-            <li>
-                <h2>p1</h2>
-                <p>enlace</p>
-            </li>
-            <li>
-                <h2>p1</h2>
-                <p>enlace</p>
-            </li>
-        </ul>
-    </div>
+    
 </body>
 </html>
